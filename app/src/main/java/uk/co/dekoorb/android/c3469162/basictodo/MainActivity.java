@@ -2,6 +2,7 @@ package uk.co.dekoorb.android.c3469162.basictodo;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.DialogFragment;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity
 
     private TodoAdapter mAdapter;
     private TodoOpenHelper mDbHelper;
+    private Cursor mCursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +82,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void removeTodo(long id) {
         final long _id = id;
+        Resources res = getResources();
+        String note = mCursor.getString(mCursor.getColumnIndex(TodoContract.Todo.COLUMN_NOTE));
+        String message = res.getString(R.string.confirm_delete, note);
         new AlertDialog.Builder(this)
                 .setTitle(R.string.delete_todo)
+                .setMessage(message)
                 .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -106,6 +112,7 @@ public class MainActivity extends AppCompatActivity
                 null,
                 null,
                 TodoContract.Todo._ID);
+        mCursor = cursor;
         mAdapter.swapCursor(cursor);
     }
 

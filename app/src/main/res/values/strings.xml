@@ -6,4 +6,5 @@
     <string name="todo_hint">Todo</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="confirm_delete">Are you sure you want to remove \"%s\"?</string>
 </resources>
